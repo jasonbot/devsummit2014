@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <style type="text/css">
+            html {
+                height: 100%;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                font-family: "Avenir LT 55 Roman";
+                text-align: center;
+            }
+            body {
+                font-family: Arial;
+                margin: 0;
+            }
+            #slides {
+                color: white;
+                background-image: -webkit-gradient(
+                    linear,
+                    left bottom,
+                    left top,
+                    color-stop(0, #00BAF2),
+                    color-stop(0.3, #007BC2),
+                    color-stop(0.9, #053364)
+                );
+                background-image: -o-linear-gradient(top, #00BAF2 0%, #007BC2 30%, #053364 90%);
+                background-image: -moz-linear-gradient(top, #00BAF2 0%, #007BC2 30%, #053364 90%);
+                background-image: -webkit-linear-gradient(top, #00BAF2 0%, #007BC2 30%, #053364 90%);
+                background-image: -ms-linear-gradient(top, #00BAF2 0%, #007BC2 30%, #053364 90%);
+                background-image: linear-gradient(to top, #00BAF2 0%, #007BC2 30%, #053364 90%);
+                background-position: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #firstslide.slide {
+                background: url(title-background.png);
+                background-position: cover;
+            }
+            #firstslide.slide h1 {
+                display: none;
+            }
+            #lastslide.slide {
+                background: url(final-slide-background.png);
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            section.slide {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="slides">
+            <section id="firstslide">
+                <h1>Presentation Title</h1>
+            </section>
+            <section>
+                <h1>Slide 2</h1>
+            </section>
+            <section id="lastslide">
+                <h1>Slide 3</h1>
+            </section>
+        </div>
+    </body>
+</html>
