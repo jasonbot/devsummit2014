@@ -14,6 +14,7 @@
                 margin: 0;
             }
             #slides {
+                perspective: 50%;
                 color: white;
                 background-image: -webkit-gradient(
                     linear,
@@ -42,7 +43,8 @@
                 background-position: cover;
             }
             #firstslide.slide h1 {
-                display: none;
+                padding-top: 400px;
+                /* display: none; */
             }
             #lastslide.slide {
                 background: url(final-slide-background.png);
@@ -55,6 +57,23 @@
                 position: absolute;
                 top: 0;
                 left: 0;
+                opacity: 1;
+                transition: all 1.05s ease-in-out;
+                -moz-transition: all 1.05s ease-in-out;
+                -webkit-transition: all 1.05s ease-in-out;
+                -o-transition: all 0.75s ease-in-out;
+            }
+            section.fadedout
+            {
+                opacity: 0;
+                transition: all 0.25s ease-in-out;
+                -moz-transition: all 0.25s ease-in-out;
+                -webkit-transition: all 0.25s ease-in-out;
+                -o-transition: all 0.25s ease-in-out;
+            }
+            section.hidden
+            {
+                display: none;
             }
         </style>
     </head>
@@ -67,8 +86,47 @@
                 <h1>Slide 2</h1>
             </section>
             <section id="lastslide">
-                <h1>Slide 3</h1>
             </section>
         </div>
+        <script src="jquery-1.11.0.min.js"></script>
+        <script>
+            function onkey(keyevent)
+            {
+                var currentslide = $("#slides section.slide:not(.fadedout)");
+                var prevslide = currentslide.prev("section.slide");
+                var nextslide = currentslide.next("section.slide");
+
+                prevslide.removeClass('hidden');
+                nextslide.removeClass('hidden');
+
+                if (keyevent.keyCode == 37 || keyevent.keyCode == 38)
+                {
+                    if (prevslide.length != 0)
+                    {
+                        currentslide.addClass('fadedout');
+                        prevslide.removeClass('fadedout');
+                        console.log('previous slide', prevslide);
+                    }
+                }
+                else if (keyevent.keyCode == 39 || keyevent.keyCode == 40)
+                {
+                    if (nextslide.length != 0)
+                    {
+                        currentslide.addClass('fadedout');
+                        nextslide.removeClass('fadedout');
+                        console.log('next slide', nextslide);
+                    }
+                }
+            }
+
+            $(
+                function()
+                {
+                    $('#slides section').addClass('slide fadedout hidden');
+                    $('#slides section').first().removeClass('fadedout hidden');
+                    $(window).keyup(onkey);
+                }
+            );
+        </script>
     </body>
 </html>
