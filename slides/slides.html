@@ -23,7 +23,7 @@
                 overflow: hidden;
             }
             #slides {
-                perspective: 50%;
+                background: #007BC2;
                 color: white;
                 background-image: -webkit-gradient(
                     linear,
@@ -55,6 +55,10 @@
                 background: url(final-slide-background.png);
                 background-repeat: no-repeat;
                 background-position: center center;
+            }
+            .videoslide {
+                text-align: center;
+                background: #35AC46;
             }
             section.slide {
                 width: 100%;
@@ -101,8 +105,8 @@
             <section>
                 <h1>Act I: Making a Script Tool to Call a Command Line Utility</h1>
             </section>
-            <section>
-                <video src="outfile.webm#t=10,15" controls></video>            
+            <section class="videoslide">
+                <video src="outfile.webm#t=10,15" controls loop></video>            
             </section>
             <section>
                 <h1>Act II: Making a Script Tool to Calculate Area</h1>
