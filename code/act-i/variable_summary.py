@@ -23,13 +23,13 @@ class TempShapefile(object):
             arcpy.management.Delete(self._shapefilename)
         self._shapefilename = None
 
-def variable_summary(feature_class_path):
+def variable_summary(feature_class_path, variable_name):
     # Use a context manager to make sure we have a shapefile to work with
     with TempShapefile(feature_class_path) as shapefile_path:
         # Assemble command line
         commandlineargs = ['R', '--slave', '--vanilla', '--args',
                            shapefile_path,
-                           str(arcpy.GetParameterAsText(1))]
+                           variable_name]
 
         # Locate and read R input script
         rscriptname = os.path.join(os.path.abspath(
@@ -44,7 +44,7 @@ def variable_summary(feature_class_path):
                                     stderr=subprocess.PIPE,
                                     shell=True)
 
-        # Grab the printed output
+        # Grab the output written to stdout/stderr
         stdoutstring, stderrstring = rprocess.communicate()
 
         # Push output to messages window
@@ -61,4 +61,5 @@ def variable_summary(feature_class_path):
             arcpy.AddMessage(" ")
 
 if __name__ == '__main__':
-    test = variable_summary(arcpy.GetParameterAsText(0)) 
+    test = variable_summary(arcpy.GetParameterAsText(0),
+                            arcpy.GetParameterAsText(1))
