@@ -12,6 +12,8 @@
             body {
                 font-family: Arial;
                 margin: 0;
+                overflow: hidden;
+                background: black;
             }
             #slides {
                 perspective: 50%;
@@ -58,18 +60,26 @@
                 top: 0;
                 left: 0;
                 opacity: 1;
-                transition: all 1.05s ease-in-out;
-                -moz-transition: all 1.05s ease-in-out;
-                -webkit-transition: all 1.05s ease-in-out;
-                -o-transition: all 0.75s ease-in-out;
+                transition: all 0.33s ease-in-out;
+                -moz-transition: all 0.33s ease-in-out;
+                -webkit-transition: all 0.33s ease-in-out;
+                -o-transition: all 0.33s ease-in-out;
             }
             section.fadedout
             {
                 opacity: 0;
-                transition: all 0.25s ease-in-out;
-                -moz-transition: all 0.25s ease-in-out;
-                -webkit-transition: all 0.25s ease-in-out;
-                -o-transition: all 0.25s ease-in-out;
+                transition: all 0.33s ease-in-out;
+                -moz-transition: all 0.33s ease-in-out;
+                -webkit-transition: all 0.33s ease-in-out;
+                -o-transition: all 0.33s ease-in-out;
+            }
+            section.previoussection
+            {
+                top: -50px;
+            }
+            section.nextsection
+            {
+                top: 50px;
             }
             section.hidden
             {
@@ -80,7 +90,9 @@
     <body>
         <div id="slides">
             <section id="firstslide">
-                <h1>Presentation Title</h1>
+                <h1>
+                    Accessing C Type Libraries with Python Script Tools
+                </h1>
             </section>
             <section>
                 <h1>Slide 2</h1>
@@ -103,8 +115,9 @@
                 {
                     if (prevslide.length != 0)
                     {
-                        currentslide.addClass('fadedout');
-                        prevslide.removeClass('fadedout');
+                        currentslide.addClass('fadedout nextsection');
+                        prevslide.removeClass('fadedout nextsection previoussection');
+                        prevslide.prevAll().addClass('previoussection');
                         console.log('previous slide', prevslide);
                     }
                 }
@@ -112,8 +125,9 @@
                 {
                     if (nextslide.length != 0)
                     {
-                        currentslide.addClass('fadedout');
-                        nextslide.removeClass('fadedout');
+                        currentslide.addClass('fadedout previoussection');
+                        nextslide.removeClass('fadedout nextsection previoussection');
+                        nextslide.nextAll().addClass('nextsection');
                         console.log('next slide', nextslide);
                     }
                 }
@@ -122,8 +136,8 @@
             $(
                 function()
                 {
-                    $('#slides section').addClass('slide fadedout hidden');
-                    $('#slides section').first().removeClass('fadedout hidden');
+                    $('#slides section').addClass('hidden slide fadedout nextsection');
+                    $('#slides section').first().removeClass('fadedout hidden nextsection');
                     $(window).keyup(onkey);
                 }
             );
