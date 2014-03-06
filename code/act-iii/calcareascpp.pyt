@@ -83,7 +83,8 @@ class CalcAreaToolCPP(object):
         """The source code of the tool."""
         # Make feature layer chainable in model builder
         parameters[2].value = parameters[0].valueAsText
-        add_area_field(parameters[0].valueAsText, parameters[1].valueAsText)
+        add_area_field(arcpy.Describe(parameters[0].valueAsText).catalogPath,
+                       parameters[1].valueAsText)
 
 def add_area_field(feature_layer, new_field):
     module_info = imp.find_module('field_area_calculator',
