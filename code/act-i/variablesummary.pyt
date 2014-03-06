@@ -12,7 +12,7 @@ class Toolbox(object):
 class VariableSummaryTool(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
-        self.label = "Tool"
+        self.label = "Variable Summary Tool"
         self.description = ""
         self.canRunInBackground = False
 
