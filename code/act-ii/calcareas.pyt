@@ -90,7 +90,7 @@ def add_area_field(feature_layer, new_field):
                               "NON_REQUIRED", "#")
 
     arcpy.AddMessage("Calculating value field")
-    feature_count = int(arcpy.management.GetCount("Income")[0])    
+    feature_count = int(arcpy.management.GetCount(feature_layer)[0])    
     arcpy.SetProgressor('step', "Calculating records", 0, feature_count, 1)
     with arcpy.da.UpdateCursor(feature_layer, ["SHAPE@", new_field]) as cur:
         for index, row in enumerate(cur):
