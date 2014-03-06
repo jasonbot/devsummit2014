@@ -17,4 +17,3 @@
 #import "esriGeoDatabase.olb" raw_interfaces_only, raw_native_types, no_namespace, named_guids
 #import "esriGeoprocessing.olb" raw_interfaces_only, raw_native_types, no_namespace, named_guids
 #using <mscorlib.dll>
-#using "dotnettoolfrompython.dll"

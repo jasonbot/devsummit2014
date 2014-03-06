@@ -3,11 +3,8 @@
 
 #include "stdafx.h"
 
-using namespace dotnettoolfrompython;
-
 extern "C"
 {
-
   __declspec(dllexport) int AddAreaFieldToFeatureClassCPlusPlus(const wchar_t* feature_class, const wchar_t* field_name)
   {
 	  // Convert wchar_t*s to bstring
@@ -68,14 +65,5 @@ extern "C"
 	  }
 
 	  return 0;
-  }
-
-
-  __declspec(dllexport) int AddAreaFieldToFeatureClassCSharp(const wchar_t* feature_class, const wchar_t* field_name)
-  {
-    ExecuteTool ^dot_net_implementation_of_tool(gcnew ExecuteTool);
-    System::String ^fc_string(gcnew System::String(feature_class)),
-                   ^field_name_string(gcnew System::String(field_name));
-    return dot_net_implementation_of_tool->AddAreaFieldToFeatureClass(fc_string, field_name_string);
   }
 }
