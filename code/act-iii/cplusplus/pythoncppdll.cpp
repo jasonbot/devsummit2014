@@ -23,18 +23,39 @@ extern "C"
 
     // Try to fetch feature class from catalog path
     if (FAILED(hr = ipUtil->OpenFeatureClassFromString(catalogPath, &ipFeatureclass)))
+    {
       return -1;
+    }
 
     // Field index of the field of interest
     long fieldIndex;
     if (FAILED(ipFeatureclass->FindField(newfieldname, &fieldIndex)))
+    {
       return -2;
+    }
 
     // Set up query and filter
     IQueryFilterPtr ipFilter(CLSID_QueryFilter);
     IFeatureCursorPtr ipCursor;
     IFeaturePtr ipRow;
     IGeometryPtr ipShape;
+
+    // Attempt to set up an edit session
+    // if the feature class' workspace type supports it
+    IDatasetPtr ipDS(ipFeatureclass);
+    IWorkspaceEditPtr ipEditWorkspace;
+    if (ipDS)
+    {
+      IWorkspacePtr ipWorkspace;
+      ipDS->get_Workspace(&ipWorkspace);
+      ipEditWorkspace = ipWorkspace;
+    }
+
+    if (ipEditWorkspace)
+    {
+      ipEditWorkspace->StartEditing(VARIANT_TRUE);
+      ipEditWorkspace->StartEditOperation();
+    }
 
     // Open cursor on feature class
     ipFeatureclass->Update(ipFilter, VARIANT_FALSE, &ipCursor);
@@ -57,7 +78,9 @@ extern "C"
       // Ensure we've got a polygon
       ipShape->get_GeometryType(&gt);
       if (gt != esriGeometryPolygon)
+      {
         return -3;
+      }
       // Get area
       IAreaPtr ipArea(ipShape);
       double area;
@@ -69,13 +92,21 @@ extern "C"
       ipRow->put_Value(fieldIndex, value);
       // Save
       ipRow->Store();
-      ::VariantClear(&value);
 
       if (rowNumber % 100 == 0 && callback_function != NULL)
       {
         callback_function(rowNumber);
       }
       rowNumber++;
+    }
+
+    ::VariantClear(&value);
+
+    // Close edit session if pending
+    if (ipEditWorkspace)
+    {
+      ipEditWorkspace->StopEditOperation();
+      ipEditWorkspace->StopEditing(VARIANT_TRUE);
     }
 
     return 0;
