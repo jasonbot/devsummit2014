@@ -42,7 +42,7 @@ def find_r_executable():
             if key.lower() == "installpath":
                 r_executable_path = os.path.join(value, "bin", "R.exe")
                 return r_executable_path
-            i + = 1
+            i += 1
     finally:
         if handle is not None:
             _winreg.CloseKey(handle)
