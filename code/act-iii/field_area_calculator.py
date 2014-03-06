@@ -1,10 +1,13 @@
-import arcpy
 import ctypes
 import os
 
+import arcpy
 
 def execute_tool():
-    loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(os.path.abspath(os.path.dirname(__file__)), "pythoncppdll.dll"))
+    loaded_dll = ctypes.cdll.LoadLibrary(
+            os.path.join(
+                os.path.abspath(os.path.dirname(__file__)),
+                "pythoncppdll.dll"))
     calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
 
     calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
@@ -15,7 +18,9 @@ def execute_tool():
     arcpy.SetParameterAsText(2, featureclass_path)
 
     arcpy.AddMessage("Adding field {0}".format(field_name))
-    arcpy.AddField_management(featureclass_path, field_name, "DOUBLE", "#", "#", "#", "#", "NULLABLE", "NON_REQUIRED", "#")
+    arcpy.AddField_management(featureclass_path, field_name,
+                              "DOUBLE", "#", "#", "#", "#", "NULLABLE",
+                              "NON_REQUIRED", "#")
 
     arcpy.AddMessage("Executing {0} function...".format(language))
     returncode = calculate_area_field(featureclass_path, field_name)
