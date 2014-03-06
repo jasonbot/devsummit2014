@@ -3,7 +3,7 @@ import os
 
 import arcpy
 
-def execute_tool():
+def execute_tool(featureclass_path, field_name):
     loaded_dll = ctypes.cdll.LoadLibrary(
             os.path.join(
                 os.path.abspath(os.path.dirname(__file__)),
@@ -12,10 +12,6 @@ def execute_tool():
 
     calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
     calculate_area_field.restype = ctypes.c_int
-
-    featureclass_path = arcpy.GetParameterAsText(0)
-    field_name = arcpy.GetParameterAsText(1)
-    arcpy.SetParameterAsText(2, featureclass_path)
 
     arcpy.AddMessage("Adding field {0}".format(field_name))
     arcpy.management.AddField(featureclass_path, field_name,
