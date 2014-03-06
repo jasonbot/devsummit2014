@@ -1,3 +1,5 @@
+import re
+
 import arcpy
 
 
@@ -21,7 +23,26 @@ class CalcAreaTool(object):
 
     def getParameterInfo(self):
         """Define parameter definitions"""
-        params = []
+        input_layer = arcpy.Parameter(name="in_layer",
+                                      displayName="Input Feature Layer",
+                                      direction="Input",
+                                      datatype="GPFeatureLayer")
+        input_layer.filterlist = ["Polygon"]
+
+        new_field = arcpy.Parameter(name="new_field", 
+                                    displayName="New Area Field",
+                                    direction="Input",
+                                    datatype="GPString")
+
+        modified_layer = arcpy.Parameter(name="modified_layer",
+                                         displayName="Feature Layer",
+                                         direction="Output",
+                                         parameterType="Derived",
+                                         datatype="GPFeatureLayer")
+
+        params = [input_layer,
+                  new_field,
+                  modified_layer]
         return params
 
     def isLicensed(self):
@@ -32,13 +53,42 @@ class CalcAreaTool(object):
         """Modify the values and properties of parameters before internal
         validation is performed.  This method is called whenever a parameter
         has been changed."""
-        return
+        if parameters[0].valueAsText and parameters[1].valueAsText:
+            field = arcpy.Field()
+            field.name = parameters[1].valueAsText
+            field.type = "Double"
+            parameters[2].value = parameters[0].valueAsText
+            parameters[2].schema.additionalFields = [field]
 
     def updateMessages(self, parameters):
         """Modify the messages created by internal validation for each tool
         parameter.  This method is called after internal validation."""
-        return
+        if self.parameters[1].valueAsText:
+            if not re.match("[a-z][a-z0-9_]{0,10}$",
+                            parameters[1].valueAsText,
+                            re.IGNORECASE):
+                err_msg = "Invalid field name {}".format(
+                            self.parameters[1].valueAsText)
+                parameters[1].setErrorMessage(err_msg)
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
-        return
+        # Make feature layer chainable in model builder
+        parameters[2].value = parameters[0].valueAsText
+        add_area_field(parameters[0].valueAsText, parameters[1].valueAsText)
+
+def add_area_field(feature_layer, new_field):
+    arcpy.AddMessage("Adding field {0}".format(field_name))
+    arcpy.management.AddField(feature_layer, new_field,
+                              "DOUBLE", "#", "#", "#", "#", "NULLABLE",
+                              "NON_REQUIRED", "#")
+
+    arcpy.AddMessage("Calculating value field")
+    feature_count = int(arcpy.management.GetCount("Income")[0])    
+    arcpy.SetProgressor('step', "Calculating records", 0, feature_count, 1)
+    with arcpy.da.UpdateLayer(feature_layer, ["SHAPE@", new_field]) as cur:
+        for index, row in enumerate(cur):
+            if index % 100 == 0:
+                arcpy.SetProgressorPosition(index)
+            row[1] = row[0].area
+            cur.updateRow(row)
