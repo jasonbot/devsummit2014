@@ -68,6 +68,7 @@ def variable_summary(feature_class_path, variable_name):
         scriptsource = open(rscriptname, 'rb')
 
         # Open R and feed it the script
+        arcpy.SetProgressor("default")
         rprocess = subprocess.Popen(commandlineargs,
                                     stdin=scriptsource,
                                     stdout=subprocess.PIPE,
