@@ -25,7 +25,6 @@ class VariableSummaryTool(object):
                                       displayName="Input Feature Layer",
                                       direction="Input",
                                       datatype="GPFeatureLayer")
-        input_layer.filter.list = ["Polygon"]
 
         input_field = arcpy.Parameter(name="summary_field", 
                                       displayName="Input Field",
