@@ -2,13 +2,14 @@ import arcpy
 import ctypes
 import os
 
-loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(os.path.abspath(os.path.dirname(__file__)), "pythoncppdll.dll"))
-calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
-
-calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
-calculate_area_field.restype = ctypes.c_int
 
 def execute_tool():
+    loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(os.path.abspath(os.path.dirname(__file__)), "pythoncppdll.dll"))
+    calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
+
+    calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p]
+    calculate_area_field.restype = ctypes.c_int
+
     featureclass_path = arcpy.GetParameterAsText(0)
     field_name = arcpy.GetParameterAsText(1)
     arcpy.SetParameterAsText(2, featureclass_path)
