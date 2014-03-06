@@ -90,5 +90,4 @@ def add_area_field(feature_layer, new_field):
                                   [os.path.dirname(__file__)])
     field_area_calculator = imp.load_module('field_area_calculator',
                                             *module_info)
-    field_area_calculator.execute_tool(parameters[0].valueAsText,
-                                       parameters[1].valueAsText)
+    field_area_calculator.execute_tool(feature_layer, new_field)

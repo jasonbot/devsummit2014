@@ -18,7 +18,7 @@ def execute_tool(featureclass_path, field_name):
                               "DOUBLE", "#", "#", "#", "#", "NULLABLE",
                               "NON_REQUIRED", "#")
 
-    arcpy.AddMessage("Executing {0} function...".format(language))
+    arcpy.AddMessage("Executing C++ function...")
     returncode = calculate_area_field(featureclass_path, field_name)
 
     if returncode == -1:
