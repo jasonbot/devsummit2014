@@ -53,6 +53,7 @@ def variable_summary(feature_class_path, variable_name):
         # Assemble command line
         r_exe = find_r_executable()
         arcpy.AddMessage("Found R.exe at {}".format(r_exe))
+
         commandlineargs = [r_exe,
                            '--slave',
                            '--vanilla',
