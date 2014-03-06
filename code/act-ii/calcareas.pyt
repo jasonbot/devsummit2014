@@ -63,13 +63,19 @@ class CalcAreaTool(object):
     def updateMessages(self, parameters):
         """Modify the messages created by internal validation for each tool
         parameter.  This method is called after internal validation."""
-        if self.parameters[1].valueAsText:
+        if parameters[0].valueAsText and parameters[1].valueAsText:
             if not re.match("[a-z][a-z0-9_]{0,10}$",
                             parameters[1].valueAsText,
                             re.IGNORECASE):
                 err_msg = "Invalid field name {}".format(
-                            self.parameters[1].valueAsText)
+                            parameters[1].valueAsText)
                 parameters[1].setErrorMessage(err_msg)
+            else:
+                if (parameters[1].valueAsText.lower() in
+                        [f.name.lower()
+                         for f in
+                            arcpy.ListFields(parameters[0].valueAsText)]):
+                    parameters[1].setErrorMessage("Field already exists")
 
     def execute(self, parameters, messages):
         """The source code of the tool."""
@@ -78,7 +84,7 @@ class CalcAreaTool(object):
         add_area_field(parameters[0].valueAsText, parameters[1].valueAsText)
 
 def add_area_field(feature_layer, new_field):
-    arcpy.AddMessage("Adding field {0}".format(field_name))
+    arcpy.AddMessage("Adding field {0}".format(new_field))
     arcpy.management.AddField(feature_layer, new_field,
                               "DOUBLE", "#", "#", "#", "#", "NULLABLE",
                               "NON_REQUIRED", "#")
@@ -86,7 +92,7 @@ def add_area_field(feature_layer, new_field):
     arcpy.AddMessage("Calculating value field")
     feature_count = int(arcpy.management.GetCount("Income")[0])    
     arcpy.SetProgressor('step', "Calculating records", 0, feature_count, 1)
-    with arcpy.da.UpdateLayer(feature_layer, ["SHAPE@", new_field]) as cur:
+    with arcpy.da.UpdateCursor(feature_layer, ["SHAPE@", new_field]) as cur:
         for index, row in enumerate(cur):
             if index % 100 == 0:
                 arcpy.SetProgressorPosition(index)
