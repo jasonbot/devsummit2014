@@ -7,7 +7,7 @@ CALLBACK_C_PROTOTYPE = ctypes.CFUNCTYPE(None, ctypes.c_int)
 
 class Callback(object):
     def __init__(self, feature_layer):
-        self._row_count = int(arcpy.management.GetRowCount(feature_layer)[0])
+        self._row_count = int(arcpy.management.GetCount(feature_layer)[0])
         arcpy.SetProgressor('step', "Calculating records", 0,
                             self._row_count, 1)
         self.c_function = CALLBACK_C_PROTOTYPE(self.update)
@@ -23,7 +23,7 @@ def execute_tool(featureclass_path, field_name):
     calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
 
     calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p,
-                                     ctypes.POINTER(CALLBACK_C_PROTOTYPE)]
+                                     CALLBACK_C_PROTOTYPE]
     calculate_area_field.restype = ctypes.c_int
 
     arcpy.AddMessage("Adding field {0}".format(field_name))
