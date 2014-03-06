@@ -18,7 +18,7 @@ def execute_tool():
     arcpy.SetParameterAsText(2, featureclass_path)
 
     arcpy.AddMessage("Adding field {0}".format(field_name))
-    arcpy.AddField_management(featureclass_path, field_name,
+    arcpy.management.AddField(featureclass_path, field_name,
                               "DOUBLE", "#", "#", "#", "#", "NULLABLE",
                               "NON_REQUIRED", "#")
 
