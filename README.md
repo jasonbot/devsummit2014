@@ -18,3 +18,7 @@ This presentation will cover using Python's built-in libraries to integrate code
 * Writing C++ ArcObjects code
   * Introduction to CTypes
   * Putting what we learned from wrapping into practice on in-process code
+
+Demos Etc.
+----
+I'll put the recorded video demos and the compiled DLL (along with all the code as it was presented) as a binary release on this project (see the releases tab on top of the Github project page)
