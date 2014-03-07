@@ -19,7 +19,7 @@ def execute_tool(featureclass_path, field_name, debug=False):
     if debug:
         path_components.extend(["cplusplus", "Debug"])
     path_components.append("pythoncppdll.dll")
-    loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(*pathcomponents))
+    loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(*path_components))
     calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
 
     calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p,
