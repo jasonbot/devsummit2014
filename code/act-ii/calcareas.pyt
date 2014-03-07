@@ -27,7 +27,7 @@ class CalcAreaTool(object):
                                       displayName="Input Feature Layer",
                                       direction="Input",
                                       datatype="GPFeatureLayer")
-        input_layer.filterlist = ["Polygon"]
+        input_layer.filter.list = ["Polygon"]
 
         new_field = arcpy.Parameter(name="new_field", 
                                     displayName="New Area Field",
