@@ -14,12 +14,12 @@ class Callback(object):
     def update(self, i):
         arcpy.SetProgressorPosition(i)
 
-def execute_tool(featureclass_path, field_name):
-
-    loaded_dll = ctypes.cdll.LoadLibrary(
-            os.path.join(
-                os.path.abspath(os.path.dirname(__file__)),
-                "pythoncppdll.dll"))
+def execute_tool(featureclass_path, field_name, debug=False):
+    path_components = [os.path.abspath(os.path.dirname(__file__))]
+    if debug:
+        path_components.extend(["cplusplus", "Debug"])
+    path_components.append("pythoncppdll.dll")
+    loaded_dll = ctypes.cdll.LoadLibrary(os.path.join(*pathcomponents))
     calculate_area_field = loaded_dll.AddAreaFieldToFeatureClassCPlusPlus
 
     calculate_area_field.argtypes = [ctypes.c_wchar_p, ctypes.c_wchar_p,
