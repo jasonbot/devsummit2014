@@ -21,6 +21,7 @@
                 font-family: Arial;
                 margin: 0;
                 overflow: hidden;
+                font-size: 32pt;
             }
             #slides {
                 background: #007BC2;
@@ -89,9 +90,18 @@
             {
                 top: 50px;
             }
-            section.hidden
+            section p
             {
-                display: none;
+                margin: 2em;
+            }
+            section ul
+            {
+                margin: 3em;
+            }
+            code
+            {
+                font-family: Consolas, "Courier New";
+                background: #053364;
             }
         </style>
     </head>
@@ -104,16 +114,73 @@
                 <h2>Jason Scheirer, Bill Moreland</h2>
             </section>
             <section>
+                <p>
+                    <h2>Slides/Demos/Code all online</h2>
+                    <h2>Code: <code>http://esriurl.com/ctypes2014</code></h2>
+                    <h2>Everything: <code>http://esriurl.com/allctypes2014</code></h2>
+                </p>
+            </section>
+            <section>
+                <p>
+                    We'll be building two script tools:
+                    <ul>
+                        <li>One that calls a simple R script</li>
+                        <li>One that adds a field to a feature class and populates it with a value</li>
+                        <li>Two iterations of the add field tool</li>
+                    </ul>
+                </p>
+            </section>
+            <section>
                 <h1>Act I: Making a Script Tool to Call a Command Line Utility</h1>
             </section>
+            <section>
+                <p>It's a simple script: it uses <code>maptools</code> and R to do a basic statistical analysis</p>
+                <p><code>maptools</code> only accepts shapefiles, we want to support <i>everything</i> ArcGIS does</p>
+            </section>
+            <section>
+                <h2>Code Review (Act I)</h2>
+            </section>
             <section class="videoslide">
-                <video src="outfile.webm#t=10,15" controls loop></video>            
+                <h1>:09 through :55</h1>
             </section>
             <section>
                 <h1>Act II: Making a Script Tool to Calculate Area</h1>
             </section>
             <section>
+                <p>
+                    <ul>
+                        <li>Takes in a polygon feature class and a new field name</li>
+                        <li>Adds a double field</li>
+                        <li>Populates new field with polygon's area</li>
+                    </ul>
+                </p>
+            </section>
+            <section>
+                <h2>Code Review (Act II)</h2>
+            </section>
+            <section class="videoslide">
+                <h1>1:10 through 2:21</h1>
+            </section>
+            <section>
                 <h1>Act III: Making it <i>Fast</i></h1>
+            </section>
+            <section>
+                <p>We're going to start with the same code as before but now we're going to swap out the cursor part with C++</p>
+            </section>
+            <section>
+                <h2>Code Review (Act III)</h2>
+            </section>
+            <section>
+                <h1>A Note on Debugging</h1>
+            </section>
+            <section class="videoslide">
+                <h1>2:28 through 4:14</h1>
+            </section>
+            <section>
+                <h1>Let's See How We Do</h1>
+            </section>
+            <section class="videoslide">
+                <h1>4:15 through 7:32</h1>
             </section>
             <section id="lastslide">
             </section>
@@ -125,9 +192,6 @@
                 var currentslide = $("#slides section.slide:not(.fadedout)");
                 var prevslide = currentslide.prev("section.slide");
                 var nextslide = currentslide.next("section.slide");
-
-                prevslide.removeClass('hidden');
-                nextslide.removeClass('hidden');
 
                 if (keyevent.keyCode == 37 || keyevent.keyCode == 38)
                 {
@@ -154,8 +218,8 @@
             $(
                 function()
                 {
-                    $('#slides section').addClass('hidden slide fadedout nextsection');
-                    $('#slides section').first().removeClass('fadedout hidden nextsection');
+                    $('#slides section').addClass('slide fadedout nextsection');
+                    $('#slides section').first().removeClass('fadedout nextsection');
                     $(window).keyup(onkey);
                 }
             );
