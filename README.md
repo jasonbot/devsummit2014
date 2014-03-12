@@ -22,3 +22,9 @@ This presentation will cover using Python's built-in libraries to integrate code
 Demos Etc.
 ----
 I'll put the recorded video demos and the compiled DLL (along with all the code as it was presented) as a binary release on this project (see the releases tab on top of the Github project page)
+
+Useful Links
+----
+[Extending Geoprocessing through Python Modules](http://blogs.esri.com/esri/arcgis/2013/08/13/extending-geoprocessing-through-python-modules/)
+[Getting started with ArcObjects and `comtypes`](http://www.pierssen.com/arcgis/upload/misc/python_arcobjects.pdf)
+
