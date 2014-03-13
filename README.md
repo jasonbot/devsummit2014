@@ -26,5 +26,7 @@ I'll put the recorded video demos and the compiled DLL (along with all the code 
 Useful Links
 ----
 [Extending Geoprocessing through Python Modules](http://blogs.esri.com/esri/arcgis/2013/08/13/extending-geoprocessing-through-python-modules/)
+
 [Getting started with ArcObjects and `comtypes`](http://www.pierssen.com/arcgis/upload/misc/python_arcobjects.pdf)
 
+[Programming Against ArcObjects in C++](http://resources.arcgis.com/en/help/arcobjects-cpp/conceptualhelp/index.html#/Programming_against_ArcObjects_with_C/000100000058000000/)
