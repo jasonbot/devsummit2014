@@ -21,7 +21,7 @@ This presentation will cover using Python's built-in libraries to integrate code
 
 Demos Etc.
 ----
-I'll put the recorded video demos and the compiled DLL (along with all the code as it was presented) as a binary release on this project (see the releases tab on top of the Github project page)
+The recorded video demos and the compiled DLL (along with all the code as it was presented) [is available as a binary release on this project](https://github.com/jasonbot/devsummit2014/releases).
 
 Useful Links
 ----
